@@ -2,13 +2,11 @@ module execution-producer
 
 go 1.24.2
 
-replace github.com/thanhpv3380/api => ./pkg/api
-
 require (
 	github.com/gofiber/fiber/v2 v2.52.6
 	github.com/google/uuid v1.6.0
 	github.com/redis/go-redis/v9 v9.8.0
-	github.com/thanhpv3380/api v0.0.0-00010101000000-000000000000
+	github.com/thanhpv3380/go-common v1.0.0
 )
 
 require (

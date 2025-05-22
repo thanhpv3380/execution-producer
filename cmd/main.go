@@ -6,8 +6,8 @@ import (
 	"execution-producer/internal/routers"
 	"fmt"
 
-	logger "github.com/thanhpv3380/api/logger"
-	server "github.com/thanhpv3380/api/server"
+	logger "github.com/thanhpv3380/go-common/logger"
+	server "github.com/thanhpv3380/go-common/server"
 )
 
 func main() {

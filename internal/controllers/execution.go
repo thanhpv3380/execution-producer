@@ -5,8 +5,8 @@ import (
 	"execution-producer/internal/types/dto"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/thanhpv3380/api/errors"
-	"github.com/thanhpv3380/api/validators"
+	"github.com/thanhpv3380/go-common/errors"
+	"github.com/thanhpv3380/go-common/validators"
 )
 
 type ExecutionController interface {

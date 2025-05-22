@@ -2,6 +2,7 @@ package services
 
 import (
 	"encoding/json"
+	"execution-producer/internal/configs"
 	"execution-producer/internal/infra/redis"
 	"execution-producer/internal/types/dto"
 	"execution-producer/internal/types/enums"
@@ -11,8 +12,8 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	"github.com/thanhpv3380/api/errors"
-	"github.com/thanhpv3380/api/logger"
+	"github.com/thanhpv3380/go-common/errors"
+	"github.com/thanhpv3380/go-common/logger"
 )
 
 type ExecutionService interface {
@@ -36,7 +37,7 @@ func GetExecutionService() ExecutionService {
 }
 
 func (h *executionService) GetExecution(request *dto.ExecutionGetRequest) (*dto.ExecutionGetResponse, error) {
-	executionRaw, err := redis.HGet(enums.RedisKeyExecutionInfo, request.ID)
+	executionRaw, err := redis.Get(fmt.Sprintf("%s%s", enums.RedisKeyExecutionInfo, request.ID))
 	if err != nil {
 		if executionRaw == "NOT_FOUND" {
 			return nil, errors.NewError(string(enums.ErrorExecutionNotFound), "execution not found")
@@ -59,6 +60,7 @@ func (h *executionService) GetExecution(request *dto.ExecutionGetRequest) (*dto.
 		Status:     execution.Status,
 		StartedAt:  execution.StartedAt,
 		FinishedAt: execution.FinishedAt,
+		Result:     execution.Result,
 	}, nil
 }
 
@@ -72,6 +74,7 @@ func (h *executionService) Execute(request *dto.ExecuteRequest) (*dto.ExecuteRes
 		Code:       request.Code,
 		Language:   request.Language,
 		Status:     enums.ExecuteStatusPending,
+		Result:     "",
 	}
 
 	executionByte, err := json.Marshal(execution)
@@ -80,13 +83,14 @@ func (h *executionService) Execute(request *dto.ExecuteRequest) (*dto.ExecuteRes
 		return nil, errors.NewError("", "")
 	}
 
-	err = redis.HSet(enums.RedisKeyExecutionInfo, execution.ID, executionByte)
+	executionExpireTime := time.Duration(configs.Cfg.ExecutionExpireTime) * time.Second
+	err = redis.Set(fmt.Sprintf("%s%s", enums.RedisKeyExecutionInfo, execution.ID), executionByte, executionExpireTime)
 	if err != nil {
 		logger.Error("Error save execution to redis", err)
 		return nil, errors.NewError("", "")
 	}
 
-	err = redis.PushToQueue(fmt.Sprintf("%s:%s", enums.RedisKeyExecutionQueue, execution.Language), execution.ID)
+	err = redis.PushToQueue(fmt.Sprintf("%s%s", enums.RedisKeyExecutionQueue, execution.Language), execution.ID)
 	if err != nil {
 		logger.Error("Error push execution to redis queue", err)
 		return nil, errors.NewError("", "")

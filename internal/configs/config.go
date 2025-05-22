@@ -3,7 +3,7 @@ package configs
 import (
 	"log"
 
-	"github.com/thanhpv3380/api/env"
+	"github.com/thanhpv3380/go-common/env"
 )
 
 type Redis struct {
@@ -13,8 +13,9 @@ type Redis struct {
 }
 
 type Config struct {
-	Port  int
-	Redis Redis
+	Port                int
+	Redis               Redis
+	ExecutionExpireTime int
 }
 
 var Cfg *Config
@@ -31,6 +32,7 @@ func LoadConfig() *Config {
 			Port:     env.GetInt("REDIS_PORT", 6379),
 			Password: env.GetString("REDIS_PASSWORD", ""),
 		},
+		ExecutionExpireTime: env.GetInt("EXECUTION_EXPIRE_TIME", 300), // seconds
 	}
 
 	log.Println("Load config successfully")

@@ -23,4 +23,5 @@ type ExecutionGetResponse struct {
 	Status     enums.ExecuteStatus `json:"status"`
 	StartedAt  *time.Time          `json:"startedAt"`
 	FinishedAt *time.Time          `json:"finishedAt"`
+	Result     string              `json:"result"`
 }

@@ -19,6 +19,6 @@ const (
 type RedisKey string
 
 const (
-	RedisKeyExecutionInfo  = "execution:info"
+	RedisKeyExecutionInfo  = "execution:info:"
 	RedisKeyExecutionQueue = "execution:queue:language:"
 )

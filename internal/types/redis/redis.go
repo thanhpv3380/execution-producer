@@ -12,4 +12,5 @@ type Execution struct {
 	Status     enums.ExecuteStatus       `json:"status"`
 	Code       string                    `json:"code"`
 	Language   enums.ProgrammingLanguage `json:"language"`
+	Result     string                    `json:"result"`
 }
