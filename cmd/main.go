@@ -2,10 +2,9 @@ package main
 
 import (
 	"execution-producer/internal/configs"
+	"execution-producer/internal/infra/redis"
 	"execution-producer/internal/routers"
 	"fmt"
-
-	"github.com/thanhpv3380/api/infra/redis"
 
 	logger "github.com/thanhpv3380/api/logger"
 	server "github.com/thanhpv3380/api/server"

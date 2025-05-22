@@ -7,8 +7,8 @@ import (
 
 type Execution struct {
 	ID         string                    `json:"id"`
-	StartedAt  *time.Time                `json:"started_at"`
-	FinishedAt *time.Time                `json:"finished_at"`
+	StartedAt  *time.Time                `json:"startedAt"`
+	FinishedAt *time.Time                `json:"finishedAt"`
 	Status     enums.ExecuteStatus       `json:"status"`
 	Code       string                    `json:"code"`
 	Language   enums.ProgrammingLanguage `json:"language"`

@@ -13,8 +13,9 @@ func SetupRoutes(app *fiber.App) {
 	api := app.Group("/api")
 	v1 := api.Group("/v1")
 
-	executionService := service.NewExecutionService()
+	executionService := service.GetExecutionService()
 	executionController := controller.NewExecutionController(executionService)
 
+	v1.Get("/execution/:executionId", middlewares.WrapResponseHandler(executionController.GetExecution))
 	v1.Post("/execution", middlewares.WrapResponseHandler(executionController.Execute))
 }

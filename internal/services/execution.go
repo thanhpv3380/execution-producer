@@ -2,30 +2,67 @@ package services
 
 import (
 	"encoding/json"
+	"execution-producer/internal/infra/redis"
 	"execution-producer/internal/types/dto"
 	"execution-producer/internal/types/enums"
 	redisTypes "execution-producer/internal/types/redis"
 	"fmt"
+	"sync"
 	"time"
 
 	"github.com/google/uuid"
 	"github.com/thanhpv3380/api/errors"
-	"github.com/thanhpv3380/api/infra/redis"
 	"github.com/thanhpv3380/api/logger"
 )
 
 type ExecutionService interface {
-	Execute(request *dto.ExecuteRequest) (interface{}, error)
+	GetExecution(request *dto.ExecutionGetRequest) (*dto.ExecutionGetResponse, error)
+	Execute(request *dto.ExecuteRequest) (*dto.ExecuteResponse, error)
 }
 
 type executionService struct {
 }
 
-func NewExecutionService() ExecutionService {
-	return &executionService{}
+var (
+	executionServiceInstance ExecutionService
+	once                     sync.Once
+)
+
+func GetExecutionService() ExecutionService {
+	once.Do(func() {
+		executionServiceInstance = &executionService{}
+	})
+	return executionServiceInstance
 }
 
-func (h *executionService) Execute(request *dto.ExecuteRequest) (interface{}, error) {
+func (h *executionService) GetExecution(request *dto.ExecutionGetRequest) (*dto.ExecutionGetResponse, error) {
+	executionRaw, err := redis.HGet(enums.RedisKeyExecutionInfo, request.ID)
+	if err != nil {
+		if executionRaw == "NOT_FOUND" {
+			return nil, errors.NewError(string(enums.ErrorExecutionNotFound), "execution not found")
+		}
+
+		logger.Error("Error get execution in redis", err)
+		return nil, errors.NewError("", "")
+	}
+
+	var execution redisTypes.Execution
+
+	err = json.Unmarshal([]byte(executionRaw), &execution)
+	if err != nil {
+		logger.Error("Error marshal execution", err)
+		return nil, errors.NewError("", "")
+	}
+
+	return &dto.ExecutionGetResponse{
+		ID:         request.ID,
+		Status:     execution.Status,
+		StartedAt:  execution.StartedAt,
+		FinishedAt: execution.FinishedAt,
+	}, nil
+}
+
+func (h *executionService) Execute(request *dto.ExecuteRequest) (*dto.ExecuteResponse, error) {
 	now := time.Now()
 
 	execution := redisTypes.Execution{
@@ -55,5 +92,7 @@ func (h *executionService) Execute(request *dto.ExecuteRequest) (interface{}, er
 		return nil, errors.NewError("", "")
 	}
 
-	return nil, nil
+	return &dto.ExecuteResponse{
+		ID: execution.ID,
+	}, nil
 }
