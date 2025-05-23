@@ -1,4 +1,4 @@
-module execution-producer
+module github.com/thanhpv3380/execution-producer
 
 go 1.24.2
 
