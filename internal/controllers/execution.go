@@ -1,8 +1,8 @@
 package controllers
 
 import (
-	service "execution-producer/internal/services"
-	"execution-producer/internal/types/dto"
+	service "github.com/thanhpv3380/execution-producer/internal/services"
+	"github.com/thanhpv3380/execution-producer/internal/types/dto"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/thanhpv3380/go-common/errors"

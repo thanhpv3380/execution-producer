@@ -1,10 +1,11 @@
 package main
 
 import (
-	"execution-producer/internal/configs"
-	"execution-producer/internal/infra/redis"
-	"execution-producer/internal/routers"
 	"fmt"
+
+	"github.com/thanhpv3380/execution-producer/internal/configs"
+	"github.com/thanhpv3380/execution-producer/internal/infra/redis"
+	"github.com/thanhpv3380/execution-producer/internal/routers"
 
 	logger "github.com/thanhpv3380/go-common/logger"
 	server "github.com/thanhpv3380/go-common/server"

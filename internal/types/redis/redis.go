@@ -1,8 +1,9 @@
 package redisTypes
 
 import (
-	"execution-producer/internal/types/enums"
 	"time"
+
+	"github.com/thanhpv3380/execution-producer/internal/types/enums"
 )
 
 type Execution struct {

@@ -1,8 +1,8 @@
 package routers
 
 import (
-	controller "execution-producer/internal/controllers"
-	service "execution-producer/internal/services"
+	controller "github.com/thanhpv3380/execution-producer/internal/controllers"
+	service "github.com/thanhpv3380/execution-producer/internal/services"
 
 	middlewares "github.com/thanhpv3380/go-common/middlewares"
 
