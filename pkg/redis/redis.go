@@ -2,6 +2,7 @@ package redis
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	"github.com/redis/go-redis/v9"
@@ -60,4 +61,18 @@ func HGet(hkey string, key string) (string, error) {
 	}
 
 	return data, nil
+}
+
+func BLPop(queue string) (string, error) {
+	result, err := Client.BLPop(Ctx, 0*time.Second, queue).Result()
+
+	if err != nil {
+		return "", err
+	}
+
+	if len(result) < 2 {
+		return "", fmt.Errorf("unexpected BLPOP result: %v", result)
+	}
+
+	return result[1], nil
 }
