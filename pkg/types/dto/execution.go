@@ -3,7 +3,7 @@ package dto
 import (
 	"time"
 
-	"github.com/thanhpv3380/execution-producer/internal/types/enums"
+	"github.com/thanhpv3380/execution-producer/pkg/types/enums"
 )
 
 type ExecuteRequest struct {

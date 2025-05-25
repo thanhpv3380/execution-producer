@@ -4,8 +4,8 @@ import (
 	"fmt"
 
 	"github.com/thanhpv3380/execution-producer/internal/configs"
-	"github.com/thanhpv3380/execution-producer/internal/infra/redis"
 	"github.com/thanhpv3380/execution-producer/internal/routers"
+	"github.com/thanhpv3380/execution-producer/pkg/redis"
 
 	logger "github.com/thanhpv3380/go-common/logger"
 	server "github.com/thanhpv3380/go-common/server"

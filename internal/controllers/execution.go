@@ -2,7 +2,7 @@ package controllers
 
 import (
 	service "github.com/thanhpv3380/execution-producer/internal/services"
-	"github.com/thanhpv3380/execution-producer/internal/types/dto"
+	"github.com/thanhpv3380/execution-producer/pkg/types/dto"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/thanhpv3380/go-common/errors"

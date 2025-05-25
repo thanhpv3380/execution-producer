@@ -7,10 +7,10 @@ import (
 	"time"
 
 	"github.com/thanhpv3380/execution-producer/internal/configs"
-	"github.com/thanhpv3380/execution-producer/internal/infra/redis"
-	"github.com/thanhpv3380/execution-producer/internal/types/dto"
-	"github.com/thanhpv3380/execution-producer/internal/types/enums"
-	redisTypes "github.com/thanhpv3380/execution-producer/internal/types/redis"
+	"github.com/thanhpv3380/execution-producer/pkg/redis"
+	"github.com/thanhpv3380/execution-producer/pkg/types/dto"
+	"github.com/thanhpv3380/execution-producer/pkg/types/enums"
+	redisTypes "github.com/thanhpv3380/execution-producer/pkg/types/redis"
 
 	"github.com/google/uuid"
 	"github.com/thanhpv3380/go-common/errors"
