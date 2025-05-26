@@ -23,6 +23,10 @@ func NewClient(addr, password string) error {
 	return err
 }
 
+func TTL(key string) (time.Duration, error) {
+	return Client.TTL(Ctx, key).Result()
+}
+
 func PushToQueue(queueName string, data interface{}) error {
 	return Client.LPush(Ctx, queueName, data).Err()
 }
